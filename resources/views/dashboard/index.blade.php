@@ -10,7 +10,7 @@
         autoplayIntervalTime: 2000,
 
         slides: [
-            @for ($i = 1; $i <= 12; $i++)
+            @for ($i = 1; $i <= 10; $i++)
             {
                 imgSrc: 'https://loremflickr.com/200/200?random={{ $i }}',
                 {{-- imgAlt: 'Vibrant abstract painting with swirling blue and light pink hues on a canvas.',

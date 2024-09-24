@@ -46,6 +46,10 @@ Route::middleware(['auth', 'role:user'])->group(function(){
     Route::get('home',[HomeController::class,'index'])->name('home');
 });
 
+Route::get('pesan',function(){
+    return view('dashboard.pesanan');
+});
+
 Route::post('login-process',[LoginController::class,'login'])->name('login-process');
 Route::post('logout-process',[LoginController::class,'logout'])->name('logout-process');
 
