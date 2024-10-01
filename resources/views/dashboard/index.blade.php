@@ -8,17 +8,20 @@
     <div x-data="{
         // Sets the time between each slides in milliseconds
         autoplayIntervalTime: 2000,
-
+{{-- https://loremflickr.com/200/200?random={{ $i }} --}}
         slides: [
-            @for ($i = 1; $i <= 10; $i++)
+            {{-- @for ($i = 1; $i <= 10; $i++) --}}
+            @foreach ($jumbotron as $item)
+
             {
-                imgSrc: 'https://loremflickr.com/200/200?random={{ $i }}',
+                imgSrc: '{{$item->gambar}}',
                 {{-- imgAlt: 'Vibrant abstract painting with swirling blue and light pink hues on a canvas.',
                 title: 'Front end developers',
                 description: 'The architects of the digital world, constantly battling against their mortal enemy – browser compatibility.', --}}
                 },
 
-                @endfor
+                @endforeach
+                {{-- @endfor --}}
         ],
         currentSlideIndex: 1,
         isPaused: false,
@@ -89,6 +92,7 @@
         </div>
     </div>
 
+
     {{-- end caraousel --}}
 
     {{-- Card --}}
@@ -116,17 +120,20 @@
                 $el.scrollLeft = scrollLeft - walk;
                 });
                 " class="overflow-x-scroll scrollbar-hide relative px-0.5 mb-12" style="overflow-y: hidden;">
-                <div class="relative w-full flex mt-4 mb-4">
-                    @for ($i = 1; $i <= 15; $i++)
+                {{-- <div class="relative w-full flex mt-4 mb-4">
+                    {{-- @for ($i = 1; $i <= 15; $i++) --}}
+                    @foreach ($products as $product)
+
                     <!-- Card Items -->
                     <div class="flex space-x-4 mx-2 mb-2">
                         <!-- Card 1 -->
                         <div class="w-64 flex-none bg-white border shadow-lg rounded-lg p-4">
-                            <img src="https://picsum.photos/400/300?random={{ $i }}" alt="Cocktail" class="w-full h-40 object-cover rounded-md mb-2">
-                            <h2 class="text-lg font-semibold">Cocktail</h2>
-                            <p class="text-gray-600">Tropical mix of flavors, perfect for parties.</p>
+                            {{-- https://picsum.photos/400/300?random={{ $i }} --}}
+                            <img src="{{ $product->gambar_barang }}" alt="Cocktail" class="w-full h-40 object-cover rounded-md mb-2">
+                            <h2 class="text-lg font-semibold">{{$product->nama_barang}}</h2>
+                            <p class="text-gray-600">{{$product->deskripsi_barang}}</p>
                             <div class="flex justify-between items-center mt-4">
-                                <span class="text-xl font-bold">$8.99</span>
+                                <span class="text-xl font-bold">Rp {{$product->harga_barang}}</span>
                                 <a :href="card.link"
                                     class="text-white bg-fuchsia-950 hover:bg-fuchsia-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"><svg
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -138,7 +145,8 @@
                         </div>
 
                     </div>
-                    @endfor
+                    @endforeach
+                    {{-- @endfor --}}
                 </div>
     </div>
     {{-- End Card --}}

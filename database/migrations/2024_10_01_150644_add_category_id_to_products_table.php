@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jumbotron', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
+
         });
     }
 
@@ -22,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jumbotron');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 };

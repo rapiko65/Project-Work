@@ -13,21 +13,31 @@
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @stack('style')
-    
+    <link href="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/css/pagedone.css " rel="stylesheet"/>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 </head>
 <body>
     @include('layout.navbar')
     @yield('container')
     @include('layout.footer')
-</body>
-</html>
-@stack('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-        document.getElementById('searchIcon').onclick = function() {
-        const searchMenu = document.getElementById('searchMenu');
-        // Toggle class 'hidden' to show/hide the search menu
-        searchMenu.classList.toggle('hidden');
-    }
+    <script src="https://unpkg.com/alpinejs@3.1.0/dist/cdn.min.js"></script>
+        @stack('script')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            document.getElementById('searchIcon').onclick = function() {
+                const searchMenu = document.getElementById('searchMenu');
+                // Toggle class 'hidden' to show/hide the search menu
+                searchMenu.classList.toggle('hidden');
+            }
 
-</script>
+        </script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/js/pagedone.js"></script>
+</html>

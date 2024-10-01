@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JumbotronController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
-});
+Route::get('/',[ProductController::class, 'show'])->name('dashboard-awal');
 Route::get('/pesan', function () {
     return view('dashboard.pesanan');
 });
@@ -44,15 +43,21 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('admin-dashboard',[DashboardAdminController::class,'index'])->name('admin-dashboard');
     Route::prefix('tambah-barang')->name('tambah-barang.')->group(function () {
         Route::get('barang',[ProductController::class,'index'])->name('barang');
-        Route::get('tambah',function () {
-            return view('dashboard-admin.tambah-barang.create');
-        })->name('tambah');
+        Route::get('/tambah',[ProductController::class,'create'])->name('tambah');
         Route::post('tambah-barang', [ProductController::class,'upload'])->name('uploud-barang');
+
+    });
+    Route::prefix('tambah-jumbotron')->name('tambah-jumbotron.')->group(function () {
+        Route::get('jumbotron',[JumbotronController::class,'index'])->name('jumbotron');
+        Route::get('jumbotron-create',function () {
+            return view('dashboard-admin.jumbotron.create');
+        })->name('jumbotron-create');
+        Route::post('upload',[JumbotronController::class,'upload'])->name('uploud-jumbotron');
     });
 });
 
 Route::middleware(['auth', 'role:user'])->group(function(){
-    Route::get('home',[HomeController::class,'index'])->name('home');
+    Route::get('home',[ProductController::class, 'show'])->name('home');
 });
 
 Route::get('pesan',function(){
