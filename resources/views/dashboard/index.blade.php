@@ -5,57 +5,7 @@
     @endpush
     @section('container')
     {{-- caraousel --}}
-    <div x-data="{
-        // Sets the time between each slides in milliseconds
-        autoplayIntervalTime: 2000,
-{{-- https://loremflickr.com/200/200?random={{ $i }} --}}
-        slides: [
-            {{-- @for ($i = 1; $i <= 10; $i++) --}}
-            @foreach ($jumbotron as $item)
-
-            {
-                imgSrc: '{{$item->gambar}}',
-                {{-- imgAlt: 'Vibrant abstract painting with swirling blue and light pink hues on a canvas.',
-                title: 'Front end developers',
-                description: 'The architects of the digital world, constantly battling against their mortal enemy – browser compatibility.', --}}
-                },
-
-                @endforeach
-                {{-- @endfor --}}
-        ],
-        currentSlideIndex: 1,
-        isPaused: false,
-        autoplayInterval: null,
-        previous() {
-            if (this.currentSlideIndex > 1) {
-                this.currentSlideIndex = this.currentSlideIndex - 1
-            } else {
-                // If it's the first slide, go to the last slide
-                this.currentSlideIndex = this.slides.length
-            }
-        },
-        next() {
-            if (this.currentSlideIndex < this.slides.length) {
-                this.currentSlideIndex = this.currentSlideIndex + 1
-            } else {
-                // If it's the last slide, go to the first slide
-                this.currentSlideIndex = 1
-            }
-        },
-        autoplay() {
-            this.autoplayInterval = setInterval(() => {
-                if (! this.isPaused) {
-                    this.next()
-                }
-            }, this.autoplayIntervalTime)
-        },
-        // Updates interval time
-        setAutoplayInterval(newIntervalTime) {
-            clearInterval(this.autoplayInterval)
-            this.autoplayIntervalTime = newIntervalTime
-            this.autoplay()
-        },
-    }" x-init="autoplay" class="relative w-full overflow-hidden">
+    <div x-data="carouselData()" x-init="autoplay" class="relative w-full overflow-hidden">
 
         <!-- slides -->
         <!-- Change min-h-[50svh] to your preferred height size -->
@@ -96,7 +46,21 @@
     {{-- end caraousel --}}
 
     {{-- Card --}}
-    <h1 class="text-4xl ml-5 mt-12 mb-2 font-semibold">Category Barang</h1>
+    <div class="flex ">
+
+        <h1 class="text-4xl ml-5 mt-12 mb-2 font-semibold">Category Barang</h1>
+        <form action="{{ route('dashboard-awal') }}" method="GET" class="mt-12 ml-4">
+            <label for="category_id" class="block text-sm font-medium text-gray-700">Pilih Kategori</label>
+            <select name="category_id" id="category_id" class="form-control" onchange="this.form.submit()">
+                <option value="">Semua Kategori</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ $categoryName == $category->id ? 'selected' : '' }}>
+                        {{ $category->category }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
+    </div>
     <div x-data="swipeCards()" x-init="
                 let isDown = false;
                 let startX;
@@ -120,20 +84,18 @@
                 $el.scrollLeft = scrollLeft - walk;
                 });
                 " class="overflow-x-scroll scrollbar-hide relative px-0.5 mb-12" style="overflow-y: hidden;">
-                {{-- <div class="relative w-full flex mt-4 mb-4">
-                    {{-- @for ($i = 1; $i <= 15; $i++) --}}
+                <div class="relative w-full flex mt-4 mb-4">
                     @foreach ($products as $product)
-
                     <!-- Card Items -->
                     <div class="flex space-x-4 mx-2 mb-2">
                         <!-- Card 1 -->
                         <div class="w-64 flex-none bg-white border shadow-lg rounded-lg p-4">
                             {{-- https://picsum.photos/400/300?random={{ $i }} --}}
-                            <img src="{{ $product->gambar_barang }}" alt="Cocktail" class="w-full h-40 object-cover rounded-md mb-2">
+                            <img src="{{$product->gambar_barang}}" alt="Cocktail" class="w-full h-40 object-cover rounded-md mb-2">
                             <h2 class="text-lg font-semibold">{{$product->nama_barang}}</h2>
                             <p class="text-gray-600">{{$product->deskripsi_barang}}</p>
                             <div class="flex justify-between items-center mt-4">
-                                <span class="text-xl font-bold">Rp {{$product->harga_barang}}</span>
+                                <span class="text-xl font-bold">{{$product->harga_barang}}</span>
                                 <a :href="card.link"
                                     class="text-white bg-fuchsia-950 hover:bg-fuchsia-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"><svg
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -146,9 +108,7 @@
 
                     </div>
                     @endforeach
-                    {{-- @endfor --}}
                 </div>
-    </div>
     {{-- End Card --}}
 
     {{-- Card --}}
@@ -304,72 +264,49 @@
     </div> --}}
     @endsection
     @push('script')
-    <script>
-        function swipeCards() {
-                return {
-                    cards: [
-                    {
-                        id: 1,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Cocktail')}`,
-                        title: 'Cocktail',
-                        description: 'Tropical mix of flavors, perfect for parties.',
-                        price: 8.99,
-                        link: 'https://lqrs.com'
-                    },
-                    {
-                        id: 2,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Smoothie')}`,
-                        title: 'Smoothie',
-                        description: 'Refreshing blend of fruits and yogurt.',
-                        price: 5.49,
-                        link: 'https://lqrs.com'
-                    },
-                    {
-                        id: 3,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Iced Coffee')}`,
-                        title: 'Iced Coffee',
-                        description: 'Cold brewed coffee with a hint of vanilla.',
-                        price: 4.99,
-                        link: 'https://lqrs.com'
-                    },
-                    {
-                        id: 4,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Mojito')}`,
-                        title: 'Mojito',
-                        description: 'Classic Cuban cocktail with mint and lime.',
-                        price: 7.99,
-                        link: 'https://lqrs.com'
-                    },
-                    {
-                        id: 5,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Matcha Latte')}`,
-                        title: 'Matcha Latte',
-                        description: 'Creamy green tea latte, rich in antioxidants.',
-                        price: 6.49,
-                        link: 'https://lqrs.com'
-                    },
-                    {
-                        id: 6,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Fruit Punch')}`,
-                        title: 'Fruit Punch',
-                        description: 'Sweet and tangy punch, bursting with fruity flavors.',
-                        price: 3.99,
-                        link: 'https://lqrs.com'
-                    },
-                    {
-                        id: 7,
-                        image: `https://source.unsplash.com/random/300x200?${encodeURIComponent('Bubble Tea')}`,
-                        title: 'Bubble Tea',
-                        description: 'Chewy tapioca pearls in a sweet milk tea base.',
-                        price: 4.99,
-                        link: 'https://lqrs.com'
-                    }
-                    ],
-                    addToCart(product) {
-                    // Implement your add to cart logic here
-                    console.log('Adding to cart:', product);
-                    }
-                };
+
+        <script>
+    function carouselData() {
+        return {
+            autoplayIntervalTime: 2000,
+            slides: [
+                @foreach ($jumbotron as $item)
+                {
+                    imgSrc: '{{ $item->gambar }}',// Assuming you have description in your data
+                },
+                @endforeach
+            ],
+            currentSlideIndex: 1,
+            isPaused: false,
+            autoplayInterval: null,
+            previous() {
+                if (this.currentSlideIndex > 1) {
+                    this.currentSlideIndex = this.currentSlideIndex - 1;
+                } else {
+                    this.currentSlideIndex = this.slides.length;
                 }
-    </script>
+            },
+            next() {
+                if (this.currentSlideIndex < this.slides.length) {
+                    this.currentSlideIndex = this.currentSlideIndex + 1;
+                } else {
+                    this.currentSlideIndex = 1;
+                }
+            },
+            autoplay() {
+                this.autoplayInterval = setInterval(() => {
+                    if (!this.isPaused) {
+                        this.next();
+                    }
+                }, this.autoplayIntervalTime);
+            },
+            setAutoplayInterval(newIntervalTime) {
+                clearInterval(this.autoplayInterval);
+                this.autoplayIntervalTime = newIntervalTime;
+                this.autoplay();
+            }
+        };
+    }
+</script>
+
     @endpush

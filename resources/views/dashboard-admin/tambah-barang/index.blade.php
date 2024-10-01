@@ -28,6 +28,9 @@
                     Price
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Action
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -56,7 +59,10 @@
                     <img src="{{ asset($product->gambar_barang) }}" class="h-32 w-32">
                 </td>
                 <td class="px-6 py-4">
-
+                    {{$product->harga_barang}}
+                </td>
+                <td class="px-6 py-4">
+                    {{$product->category->category}}
                 </td>
                 <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>

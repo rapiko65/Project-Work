@@ -47,13 +47,22 @@ class ProductController extends Controller
         // $item = Product::files(public_path('images'));
         return view('dashboard-admin.tambah-barang.index',['item' => $item]);
     }
-    public function show(){
+    public function show(Request $request){
         $jumbotron = Jumbotron::all();
-        $products = Product::all();
-        // $item = Product::files(public_path('images'));
-        // return view('dashboard.index',compact('item','jumbotron'));
-        // dd($jumbotron);
-        return view('dashboard.index',['products' => $products,'jumbotron' => $jumbotron]);
+        $categoryName = $request->input('category_id');
+
+    if ($categoryName) {
+        $products = Product::whereHas('category', function ($query) use ($categoryName) {
+        $query->where('id', $categoryName);
+        })->with('category')->get();
+    } else {
+        $products = Product::with('category')->get();
+    }
+
+    $categories = Category::all();
+
+        return view('dashboard.index',['products' => $products,'jumbotron' => $jumbotron,'categoryName' => $categoryName, 'categories' => $categories ]);
+
     }
 
     public function create(){

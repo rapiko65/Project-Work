@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JumbotronController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Category;
 use Faker\Guesser\Name;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +55,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
             return view('dashboard-admin.jumbotron.create');
         })->name('jumbotron-create');
         Route::post('upload',[JumbotronController::class,'upload'])->name('uploud-jumbotron');
+    });
+    Route::prefix('tambah-category')->name('tambah-category.')->group(function () {
+        Route::get('tambah-category',[CategoryController::class,'create'])->name('tambah-category');
+        Route::post('uploud-category',[CategoryController::class, 'store'])->name('uploud-category');
     });
 });
 

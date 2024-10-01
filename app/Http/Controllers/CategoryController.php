@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function create()
+    {
+        return view('dashboard-admin.category.create');
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -17,6 +21,6 @@ class CategoryController extends Controller
             'category' => $request->category,
         ]);
 
-        return redirect()->route('categories.create')->with('success', 'Kategori berhasil ditambahkan');
+        return redirect()->route('tambah-category.tambah-category')->with('success', 'Kategori berhasil ditambahkan');
     }
 }

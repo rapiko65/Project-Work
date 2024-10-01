@@ -52,10 +52,10 @@
                 <input type="number" name="harga_barang" id="harga_barang" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
             </div>
 
-            <select name="category_id" id="category" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <select name="category_id" id="category" class="mt-1 block w-full h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="">Pilih Kategori</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}">{{ $category->category }}</option>
                 @endforeach
             </select>
 
