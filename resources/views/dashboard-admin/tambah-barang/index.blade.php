@@ -65,10 +65,14 @@
                     {{$product->category->category}}
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="{{route('tambah-barang.barang-edit' , $product->id)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                    <form action="{{ route('tambah-barang.destroy-barang', $product->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"  class="btn btn-danger font-medium text-blue-600 dark:text-blue-500 hover:underline"">Delete</button>
+                    </form>
                 </td>
             </tr>
 

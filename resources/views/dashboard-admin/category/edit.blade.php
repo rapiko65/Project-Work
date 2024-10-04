@@ -16,7 +16,7 @@
 <body class="bg-gray-100">
 
     <div class="max-w-lg  ">
-        <h1 class="text-xl font-bold mb-4 text-center">Tambah Jumbotron</h1>
+        <h1 class="text-xl font-bold mb-4 text-center">Edit Category</h1>
 
         <!-- Tampilkan Pesan Error -->
         @if ($errors->any())
@@ -30,20 +30,14 @@
         @endif
 
         <!-- Form Input -->
-        <form action="{{route('tambah-jumbotron.uploud-jumbotron')}}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <form action="{{route('tambah-category.update-category', $categories->id)}}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
+            @method('PUT')
             <div>
-                <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                <input type="text" name="nama" id="nama" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                <label for="category" class="block text-sm font-medium text-gray-700">category</label>
+                <input type="text" name="category" id="category" value="{{ $categories->category }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
-                <div class="drag-area mt-2 p-4 rounded-lg bg-gray-100 text-center cursor-pointer">
-                    <p class="drop-text text-gray-600">Seret gambar ke sini atau klik untuk memilih</p>
-                </div>
-                <input type="file" name="image" id="image" class="hidden" accept="image/*" required>
-            </div>
 
             <div>
                 <button type="submit" class="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">

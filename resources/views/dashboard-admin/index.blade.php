@@ -16,7 +16,7 @@
         <div class="w-64  bg-gray-800 h-screen p-5">
             <div class="text-white text-2xl font-semibold mb-8">Admin Panel</div>
             <ul>
-                <li class="mb-6">
+                {{-- <li class="mb-6">
                     <a href="#" class="text-gray-300 hover:text-white">Dashboard</a>
                 </li>
                 <li class="mb-6">
@@ -24,12 +24,15 @@
                 </li>
                 <li class="mb-6">
                     <a href="#" class="text-gray-300 hover:text-white">Settings</a>
-                </li>
+                </li> --}}
                 <li class="mb-6">
                     <a href="{{ route('tambah-barang.barang') }}" class="text-gray-300 hover:text-white">Tambah Barang</a>
                 </li>
                 <li class="mb-6">
                     <a href="{{ route('tambah-jumbotron.jumbotron') }}" class="text-gray-300 hover:text-white">Tambah Jumbotron</a>
+                </li>
+                <li class="mb-6">
+                    <a href="{{ route('tambah-category.category') }}" class="text-gray-300 hover:text-white">Tambah Category</a>
                 </li>
                 <li class="mb-6">
                     <a href="{{ route('logout-process') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="text-gray-300 hover:text-white">Logout</a>

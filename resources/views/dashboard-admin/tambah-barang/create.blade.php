@@ -29,7 +29,6 @@
             </div>
         @endif
 
-        <!-- Form Input -->
         <form action="{{ route('tambah-barang.uploud-barang')}}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
             <div>

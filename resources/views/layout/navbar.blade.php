@@ -8,11 +8,62 @@
             </a> --}}
         </h1>
 
+        <div class="block md:hidden" x-data="{ open: false }">
+            <button id="hamburger" @click="open = !open" class="focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+            <div x-show="open" :class="{ 'block': open, 'hidden': !open }"  x-transition:enter="transition ease-out duration-100 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute z-50 top-5 left-0 w-full bg-white shadow-md md:hidden">
+                <ul class="block text-center z-50">
+                    <li class="p-4 border-b border-gray-200">
+                        <a href="" class="hover:text-green-500">Product</a>
+                    </li>
+                    <li class="p-4 border-b border-gray-200">
+                        <a href="" class="hover:text-green-500">Category</a>
+                    </li>
+                    <li class="p-4 border-b border-gray-200">
+                        @if (Auth()->user())
+                        <div class="relative block md:hidden w-full" x-data="{ dropdown: false }">
+                            @if (Auth()->user())
+                            <button type="button" @click="dropdown = !dropdown" class="hover:text-green-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                Profile
+                            </button>
+                            <div x-show="dropdown" x-transition:enter="transition ease-out duration-100 transform" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75 transform" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute z-50 top-10 left-0 w-full bg-white shadow-md md:hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <!-- Active: "bg-gray-100", Not Active: "" -->
+                                @if(Auth()->user()->role=="user")
+                                <a href="" class="hover:text-green-500" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                <a href="" class="hover:text-green-500" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                                @elseif(Auth()->user()->role=="admin")
+                                <a href="" class="hover:text-green-500" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                @else
+                                <a href="" class="hover:text-green-500" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                @endif
+                                <a href="{{ route('logout-process') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="hover:text-green-500 block">Logout</a>
+
+                        <form id="logout-form" action="{{ route('logout-process') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                            </div>
+                            @endif
+                                @else
+                                <form id="logout-form" action="{{ route('logout-process') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                <a href="{{route('login')}}" class="mr-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-8 p-1" aria-hidden="true" focusable="false" data-prefix="far" role="img"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"/></svg>
+                                </a>
+                                @endif
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <!-- navigation -->
-        <nav class="nav font-semibold text-lg">
+        <nav class="nav font-semibold text-lg hidden md:block">
             <ul class="flex items-center">
                 <li class="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer active">
-                  <a href="">Produk</a>
+                  <a href="">Product</a>
                 </li>
                 <li class="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
                   <a href="">Category</a>
@@ -26,8 +77,10 @@
             </ul>
         </nav>
 
+
+
         <!-- buttons --->
-        <div class="w-3/12 flex justify-end">
+        <div class="w-3/12 justify-end hidden md:flex">
             <a id="searchIcon" class="cursor-pointer mr-5">
                 <svg class="h-8 p-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-search fa-w-16 fa-9x"><path fill="currentColor" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z" class=""></path></svg>
             </a>
@@ -52,11 +105,11 @@
                     placeholder="Search..."
                     class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div> --}}
-            <a href="" class="mr-5">
+            <a href="" class="mr-5 hidden md:block">
                 <svg class="h-8 p-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="shopping-cart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-shopping-cart fa-w-18 fa-7x"><path fill="currentColor" d="M551.991 64H144.28l-8.726-44.608C133.35 8.128 123.478 0 112 0H12C5.373 0 0 5.373 0 12v24c0 6.627 5.373 12 12 12h80.24l69.594 355.701C150.796 415.201 144 430.802 144 448c0 35.346 28.654 64 64 64s64-28.654 64-64a63.681 63.681 0 0 0-8.583-32h145.167a63.681 63.681 0 0 0-8.583 32c0 35.346 28.654 64 64 64 35.346 0 64-28.654 64-64 0-18.136-7.556-34.496-19.676-46.142l1.035-4.757c3.254-14.96-8.142-29.101-23.452-29.101H203.76l-9.39-48h312.405c11.29 0 21.054-7.869 23.452-18.902l45.216-208C578.695 78.139 567.299 64 551.991 64zM208 472c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm256 0c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm23.438-200H184.98l-31.31-160h368.548l-34.78 160z" class=""></path></svg>
             </a>
             @if (Auth()->user())
-            <div class="relative" x-data="{ dropdown: false }">
+            <div class="relative hidden md:block" x-data="{ dropdown: false }">
                 @if (Auth()->user())
                 <button type="button" @click="dropdown = !dropdown" class="" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-8 p-1" aria-hidden="true" focusable="false" data-prefix="far" role="img"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"/></svg>

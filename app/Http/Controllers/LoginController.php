@@ -22,7 +22,7 @@ class LoginController extends Controller
             Auth::login($user);
 
             if ($user->role === 'admin') {
-                return redirect()->route('admin-dashboard');
+                return redirect()->route('tambah-barang.barang');
             } elseif ($user->role === 'user') {
                 return redirect()->route('home');
             }

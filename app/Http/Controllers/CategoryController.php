@@ -21,6 +21,37 @@ class CategoryController extends Controller
             'category' => $request->category,
         ]);
 
-        return redirect()->route('tambah-category.tambah-category')->with('success', 'Kategori berhasil ditambahkan');
+        return redirect()->route('tambah-category.category')->with('success', 'Kategori berhasil ditambahkan');
+    }
+
+    public function index(){
+        $categories = Category::paginate(10);
+        return view('dashboard-admin.category.index', compact('categories'));
+    }
+
+    public function edit($id){
+        $categories = Category::findOrFail($id);
+        return view('dashboard-admin.category.edit', ['categories' => $categories]);
+    }
+
+    public function update(Request $request,$id)
+    {
+        $request->validate([
+            'category' => 'required|string|max:255',
+        ]);
+        $categories =  Category::findOrFail($id);
+        $categories->update([
+            'category' => $request->category,
+        ]);
+
+        return redirect()->route('tambah-category.category')->with('success', 'Kategori berhasil ditambahkan');
+    }
+
+    public function destroy($id)
+    {
+        $product = Category::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('tambah-category.category')->with('success', 'Product deleted successfully');
     }
 }
